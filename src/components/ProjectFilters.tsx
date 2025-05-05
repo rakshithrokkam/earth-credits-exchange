@@ -114,7 +114,7 @@ const ProjectFilters = ({ onFilterChange }: ProjectFiltersProps) => {
             <SelectValue placeholder="All regions" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All regions</SelectItem>
+            <SelectItem value="all">All regions</SelectItem>
             <SelectItem value="africa">Africa</SelectItem>
             <SelectItem value="asia">Asia</SelectItem>
             <SelectItem value="europe">Europe</SelectItem>

@@ -6,7 +6,21 @@ import ProjectFilters from '@/components/ProjectFilters';
 import ProjectGrid from '@/components/ProjectGrid';
 import CallToAction from '@/components/CallToAction';
 
-const projects = [
+type Project = {
+  id: number;
+  title: string;
+  description: string;
+  location: string;
+  region: string;
+  image: string;
+  price: number;
+  type: "Forest Conservation" | "Renewable Energy" | "Community Projects";
+  typeSlug: 'forest' | 'renewable' | 'community';
+  verified: boolean;
+  impact: string;
+};
+
+const projects: Project[] = [
   {
     id: 1,
     title: 'Madre de Dios Forest Conservation',
@@ -134,7 +148,7 @@ const Marketplace = () => {
     priceMax: 50,
     search: '',
   });
-  const [filteredProjects, setFilteredProjects] = useState(projects);
+  const [filteredProjects, setFilteredProjects] = useState<Project[]>(projects);
 
   useEffect(() => {
     const newFilteredProjects = projects.filter(project => {
