@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,7 +62,46 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				earth: {
+					50: '#f5f8f5',
+					100: '#e6efe6',
+					200: '#d0e0d0',
+					300: '#adc7ad',
+					400: '#83a883',
+					500: '#598759',
+					600: '#476d47',
+					700: '#3a593a',
+					800: '#324832',
+					900: '#2b3c2b',
+					950: '#152115',
+				},
+				forest: {
+					50: '#eef9ed',
+					100: '#d8f0d8',
+					200: '#b5e2b5',
+					300: '#87cd87',
+					400: '#56b156',
+					500: '#3a953a',
+					600: '#29772b',
+					700: '#225e25',
+					800: '#1e4b21',
+					900: '#1a3f1d',
+					950: '#0a220d',
+				},
+				sky: {
+					50: '#f0f9ff',
+					100: '#e0f1fe',
+					200: '#bce3fd',
+					300: '#90cefb',
+					400: '#5db1f8',
+					500: '#3994f5',
+					600: '#2576ea',
+					700: '#1e61d8',
+					800: '#214faf',
+					900: '#1e4289',
+					950: '#172a54',
+				},
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -84,11 +124,16 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'float': {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-10px)' },
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'float': 'float 6s ease-in-out infinite',
 			}
 		}
 	},
