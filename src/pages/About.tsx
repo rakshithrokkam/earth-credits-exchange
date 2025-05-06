@@ -2,10 +2,23 @@
 import React from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import CallToAction from '@/components/CallToAction';
 import { Earth, Users, Shield, TreeDeciduous } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/context/AuthContext';
 
 const About = () => {
+  const navigate = useNavigate();
+  const { user } = useAuth();
+
+  const handleGetStarted = () => {
+    if (user) {
+      navigate('/projects');
+    } else {
+      navigate('/auth');
+    }
+  };
+
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -22,6 +35,11 @@ const About = () => {
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               At EarthCredits, we're committed to making carbon offsetting accessible, transparent, and impactful.
             </p>
+            <div className="mt-8">
+              <Button onClick={handleGetStarted} size="lg" className="px-8">
+                {user ? 'Browse Projects' : 'Get Started'}
+              </Button>
+            </div>
           </div>
         </div>
 
@@ -102,7 +120,19 @@ const About = () => {
           </div>
         </div>
         
-        <CallToAction />
+        <div className="bg-earth-50 py-16">
+          <div className="container mx-auto text-center">
+            <h2 className="text-3xl font-bold tracking-tight mb-6">
+              Join us in creating a more sustainable future
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+              Whether you're an individual looking to offset your carbon footprint or a business aiming to meet sustainability goals, we're here to help you make a difference.
+            </p>
+            <Button onClick={handleGetStarted} size="lg" className="px-8">
+              {user ? 'Browse Projects' : 'Get Started'}
+            </Button>
+          </div>
+        </div>
       </main>
       <Footer />
     </div>
