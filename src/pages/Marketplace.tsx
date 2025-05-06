@@ -1,10 +1,10 @@
-
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ProjectFilters from '@/components/ProjectFilters';
 import ProjectGrid from '@/components/ProjectGrid';
 import CallToAction from '@/components/CallToAction';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 type Project = {
   id: number;
@@ -141,6 +141,7 @@ const projects: Project[] = [
 ];
 
 const Marketplace = () => {
+  const isMobile = useIsMobile();
   const [filters, setFilters] = useState({
     type: '',
     region: '',
@@ -186,22 +187,35 @@ const Marketplace = () => {
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            <div className="lg:col-span-1">
-              <div className="sticky top-4">
+            {isMobile ? (
+              <div className="lg:col-span-4">
                 <ProjectFilters onFilterChange={setFilters} />
+                <div className="flex justify-between items-center my-4">
+                  <p className="text-muted-foreground">
+                    Showing <span className="font-medium text-foreground">{filteredProjects.length}</span> projects
+                  </p>
+                </div>
+                <ProjectGrid projects={filteredProjects} />
               </div>
-            </div>
-            
-            <div className="lg:col-span-3">
-              <div className="flex justify-between items-center mb-6">
-                <p className="text-muted-foreground">
-                  Showing <span className="font-medium text-foreground">{filteredProjects.length}</span> projects
-                </p>
-                {/* Could add sorting options here if needed */}
-              </div>
-              
-              <ProjectGrid projects={filteredProjects} />
-            </div>
+            ) : (
+              <>
+                <div className="lg:col-span-1">
+                  <div className="sticky top-4">
+                    <ProjectFilters onFilterChange={setFilters} />
+                  </div>
+                </div>
+                
+                <div className="lg:col-span-3">
+                  <div className="flex justify-between items-center mb-6">
+                    <p className="text-muted-foreground">
+                      Showing <span className="font-medium text-foreground">{filteredProjects.length}</span> projects
+                    </p>
+                  </div>
+                  
+                  <ProjectGrid projects={filteredProjects} />
+                </div>
+              </>
+            )}
           </div>
         </div>
         

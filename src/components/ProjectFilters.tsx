@@ -11,13 +11,23 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Slider } from '@/components/ui/slider';
-import { TreeDeciduous, Leaf, Coins, Search } from 'lucide-react';
+import { TreeDeciduous, Leaf, Coins, Search, Filter } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 type ProjectFiltersProps = {
   onFilterChange: (filters: Record<string, any>) => void;
 };
 
 const ProjectFilters = ({ onFilterChange }: ProjectFiltersProps) => {
+  const isMobile = useIsMobile();
   const [priceRange, setPriceRange] = useState([0, 50]);
   const [filters, setFilters] = useState({
     type: '',
@@ -65,8 +75,8 @@ const ProjectFilters = ({ onFilterChange }: ProjectFiltersProps) => {
     onFilterChange(newFilters);
   };
 
-  return (
-    <div className="bg-white border border-earth-100 rounded-lg p-6 space-y-6">
+  const FiltersContent = () => (
+    <div className="space-y-6">
       <div className="relative">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
         <Input
@@ -145,6 +155,45 @@ const ProjectFilters = ({ onFilterChange }: ProjectFiltersProps) => {
       <Button variant="ghost" className="w-full" onClick={handleReset}>
         Reset Filters
       </Button>
+    </div>
+  );
+
+  if (isMobile) {
+    return (
+      <>
+        <div className="flex items-center justify-between mb-4">
+          <Input
+            placeholder="Search projects..."
+            className="mr-2"
+            value={filters.search}
+            onChange={handleSearch}
+          />
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="outline" size="icon">
+                <Filter className="h-4 w-4" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="bottom" className="h-[80vh]">
+              <SheetHeader>
+                <SheetTitle>Filter Projects</SheetTitle>
+                <SheetDescription>
+                  Narrow down projects by type, region, and price.
+                </SheetDescription>
+              </SheetHeader>
+              <div className="py-4">
+                <FiltersContent />
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
+      </>
+    );
+  }
+
+  return (
+    <div className="bg-white border border-earth-100 rounded-lg p-6 space-y-6">
+      <FiltersContent />
     </div>
   );
 };
