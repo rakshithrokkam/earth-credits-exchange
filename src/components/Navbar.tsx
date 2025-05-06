@@ -2,9 +2,29 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Earth } from "lucide-react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '@/context/AuthContext';
 
 const Navbar = () => {
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
+
+  const handleAuthAction = () => {
+    if (user) {
+      signOut();
+    } else {
+      navigate('/auth');
+    }
+  };
+
+  const handleGetStarted = () => {
+    if (user) {
+      navigate('/projects');
+    } else {
+      navigate('/auth');
+    }
+  };
+
   return (
     <nav className="w-full py-4 border-b border-gray-100">
       <div className="container mx-auto flex items-center justify-between">
@@ -26,10 +46,16 @@ const Navbar = () => {
         </div>
         
         <div className="flex items-center gap-4">
-          <Button variant="ghost" className="hidden md:inline-flex">
-            Log in
+          <Button 
+            variant="ghost" 
+            className="hidden md:inline-flex"
+            onClick={handleAuthAction}
+          >
+            {user ? 'Log out' : 'Log in'}
           </Button>
-          <Button>Get Started</Button>
+          <Button onClick={handleGetStarted}>
+            {user ? 'Browse Projects' : 'Get Started'}
+          </Button>
         </div>
       </div>
     </nav>

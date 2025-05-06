@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { 
@@ -35,31 +36,33 @@ const ProjectGrid = ({ projects }: ProjectGridProps) => {
       {projects.length > 0 ? (
         projects.map(project => (
           <Card key={project.id} className="overflow-hidden border border-earth-100 transition-all hover:shadow-md">
-            <div className="aspect-video relative overflow-hidden">
-              <img 
-                src={project.image} 
-                alt={project.title}
-                className="w-full h-full object-cover transition-transform hover:scale-105 duration-700"
-              />
-              <Badge className="absolute top-3 right-3 bg-white/90 text-forest-800 hover:bg-white/95">
-                {project.type}
-              </Badge>
-            </div>
-            
-            <CardHeader>
-              <div className="flex justify-between items-start">
-                <CardTitle className="text-lg">{project.title}</CardTitle>
-                {project.verified && (
-                  <div className="flex items-center gap-1 bg-earth-50 px-2 py-1 rounded-full text-xs text-earth-800">
-                    <svg className="h-3 w-3 text-primary" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                    Verified
-                  </div>
-                )}
+            <Link to={`/projects/${project.id}`}>
+              <div className="aspect-video relative overflow-hidden">
+                <img 
+                  src={project.image} 
+                  alt={project.title}
+                  className="w-full h-full object-cover transition-transform hover:scale-105 duration-700"
+                />
+                <Badge className="absolute top-3 right-3 bg-white/90 text-forest-800 hover:bg-white/95">
+                  {project.type}
+                </Badge>
               </div>
-              <CardDescription>{project.location}</CardDescription>
-            </CardHeader>
+              
+              <CardHeader>
+                <div className="flex justify-between items-start">
+                  <CardTitle className="text-lg">{project.title}</CardTitle>
+                  {project.verified && (
+                    <div className="flex items-center gap-1 bg-earth-50 px-2 py-1 rounded-full text-xs text-earth-800">
+                      <svg className="h-3 w-3 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                      Verified
+                    </div>
+                  )}
+                </div>
+                <CardDescription>{project.location}</CardDescription>
+              </CardHeader>
+            </Link>
             
             <CardContent>
               <p className="text-muted-foreground line-clamp-3">{project.description}</p>
@@ -70,7 +73,9 @@ const ProjectGrid = ({ projects }: ProjectGridProps) => {
                 <span className="text-sm text-muted-foreground">{project.impact}</span>
                 <span className="font-semibold">${project.price.toFixed(2)}</span>
               </div>
-              <Button>Purchase</Button>
+              <Link to={`/projects/${project.id}`}>
+                <Button>Purchase</Button>
+              </Link>
             </CardFooter>
           </Card>
         ))
