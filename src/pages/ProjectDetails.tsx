@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -24,7 +23,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { toast } from '@/hooks/use-toast';
 import { useAuth } from '@/context/AuthContext';
-import { supabase } from '@/integrations/supabase/client';
+import { createPurchase } from '@/utils/purchaseUtils';
 
 interface ProjectDetails {
   id: number;
@@ -80,19 +79,15 @@ const ProjectDetails = () => {
     setIsLoading(true);
     
     try {
-      // Insert purchase record into Supabase
-      const { error } = await supabase
-        .from('purchases')
-        .insert({
-          user_id: user.id,
-          project_id: projectId,
-          project_title: projectData.title,
-          quantity: quantity,
-          total_price: projectData.price * quantity,
-          project_type: projectData.type
-        });
+      const result = await createPurchase({
+        project_id: projectId || '1',
+        project_title: projectData.title,
+        quantity: quantity,
+        total_price: projectData.price * quantity,
+        project_type: projectData.type
+      });
       
-      if (error) throw error;
+      if (!result.success) throw new Error(result.error);
       
       toast({
         title: "Purchase successful!",
